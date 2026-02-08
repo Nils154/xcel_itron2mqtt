@@ -10,8 +10,8 @@ services:
     volumes:
       - /srv/docker/xcel/certs:/opt/xcel_itron2mqtt/certs
     environment:
-      MQTT_SERVER: 192.168.4.5
-      MQTT_PORT: 1883
-      MQTT_USER: pi
-      MQTT_PASSWORD: Mon1235hibiscus
-      METER_PORT: 8081
+      MQTT_SERVER: 
+      MQTT_PORT: 
+      MQTT_USER: 
+      MQTT_PASSWORD: 
+      METER_PORT: 
