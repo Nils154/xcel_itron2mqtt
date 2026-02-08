@@ -1,22 +1,17 @@
-version: "3.7"
-
 services:
-  mqtt:
-    image: emqx/nanomq
-    container_name: nanomq
-    ports:
-      - "1883:1883"
   xcel_itron2mqtt:
+    image: ghcr.io/nils154/xcel_itron2mqtt:main
+    restart: unless-stopped
+    network_mode: host
     container_name: xcel_itron2mqtt
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - mqtt
     volumes:
-      - certs:/opt/xcel_itron2mqtt/certs
+      - /srv/docker/xcel/certs:/opt/xcel_itron2mqtt/certs
     environment:
-      MQTT_SERVER: mqtt
+      MQTT_SERVER: 192.168.4.5
+      MQTT_PORT: 1883
+      MQTT_USER: pi
+      MQTT_PASSWORD: Mon1235hibiscus
       METER_PORT: 8081
-    env_file:
-      - .env

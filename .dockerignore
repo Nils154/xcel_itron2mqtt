@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+*.egg-info/
+
+# Development
+.env
+.env.*
+*.log
+.cursor/
+docs/
+scripts/
+
+# Secrets (shouldn't be in image anyway)
+certs/
+
+# Docker
+docker-compose.yaml
+Dockerfile
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db

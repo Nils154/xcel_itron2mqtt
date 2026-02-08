@@ -91,10 +91,9 @@ if __name__ == '__main__':
     meter = xcelMeter(INTEGRATION_NAME, ip_address, port_num, creds)
     meter.setup()
 
-    #upt_tree = meter.map_upt_tree(pretty_print=True)
-    
-    #with open('upt_tree.txt', 'w') as f:
-    #    f.write(xcelMeter.pretty_print_upt_tree(upt_tree))
     if meter.initalized:
-        # The run method controls all the looping, querying, and mqtt sending
-        meter.run()
+        # Generate endpoints from the UPT tree and save to endpoints file
+        logging.info("Starting endpoint discovery...")
+        endpoints = meter.generate_endpoints_from_tree(save_file=True)
+        logging.info(f"Discovery complete! Found {len(endpoints)} endpoints.")
+        logging.info(f"Endpoints file saved as endpoints_{str(meter._swVer).replace('.', '_')}.yaml")

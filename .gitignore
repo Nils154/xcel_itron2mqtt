@@ -9,6 +9,10 @@ certs
 __pycache__/
 *.py[cod]
 *$py.class
+.venv/
 
 # Local development scripts
 hack/
+
+#my own files
+docker-compose.yaml

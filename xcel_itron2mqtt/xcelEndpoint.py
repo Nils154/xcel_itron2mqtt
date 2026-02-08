@@ -7,6 +7,10 @@ import paho.mqtt.client as mqtt
 import xml.etree.ElementTree as ET
 from copy import deepcopy
 from tenacity import retry, stop_after_attempt, before_sleep_log, wait_exponential
+import urllib3
+
+# Suppress InsecureRequestWarning for verify=False
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +100,10 @@ class xcelEndpoint():
         """
         Helper to generate the JSON sonfig payload for setting
         up the new Homeassistant entities
+        
+        The details dict can include Home Assistant MQTT discovery fields such as:
+        - enabled_by_default: bool (to disable entities by default)
+        - All other fields are preserved and passed through to the MQTT payload
 
         Returns: Tuple consisting of a string representing the mqtt
         topic, and a dict to be used as the payload.
@@ -103,6 +111,7 @@ class xcelEndpoint():
         payload = deepcopy(details)
         mqtt_friendly_name = self.name.replace(" ", "_")
         entity_type = payload.pop('entity_type')
+        # Note: All other fields from details (including enabled_by_default) are preserved in payload
         payload["state_topic"] = f'{self._mqtt_topic_prefix}/{entity_type}/{mqtt_friendly_name}/{sensor_name}/state'
         payload['name'] = f'{self.name} {sensor_name}'
         # Mouthful
@@ -185,4 +194,5 @@ class xcelEndpoint():
         Returns: None
         """
         reading = self.get_reading()
+        print(reading)
         self.process_send_mqtt(reading)
